@@ -54,11 +54,16 @@ def main():
     trainloader = torch.utils.data.DataLoader(furniture_dataset, batch_size=batch_size, shuffle=True, num_workers=2)
 
 
+
     # get some random training images
-    dataiter = iter(trainloader)
-    images, labels = next(dataiter)
+    #dataiter = iter(trainloader)
+    #images, labels = next(dataiter)
 
     
+
+
+
+### HELPER METHODS AND CLASSES
 
 def imshow(img):
         img = img / 2 + 0.5     # unnormalize
@@ -70,8 +75,9 @@ def load_image(image_path):
     """Loads an image from the given path, converts it to a NumPy array,
      and returns a torch.*Tensor object"""
     image = Image.open(image_path)
+    image_array = np.array(image)
     transform = transforms.ToTensor()
-    tensor_image = transform(image)
+    tensor_image = transform(image_array)
     return tensor_image
 
 class CustomFurnitureDataset(torch.utils.data.Dataset):
@@ -87,7 +93,7 @@ class CustomFurnitureDataset(torch.utils.data.Dataset):
         if self.transform:
             image = self.transform(image)
         return image, label
-
+    
 
 
 class Net(nn.Module):
@@ -108,9 +114,6 @@ class Net(nn.Module):
         x = F.relu(self.fc2(x))
         x = self.fc3(x)
         return x
-
-
-
 
 if __name__ == "__main__":
     main()
